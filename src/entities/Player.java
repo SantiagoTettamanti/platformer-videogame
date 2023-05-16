@@ -24,9 +24,9 @@ public class Player extends Entity {
     }
 
     public void update () {
+        updatePos();
         updateAnimationTick();
         setAnimation();
-        updatePos();
     }
 
     public void render (Graphics g) {
@@ -96,6 +96,13 @@ public class Player extends Entity {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void resetDirBooleans() {
+        left = false;
+        right = false;
+        up = false;
+        down = false;
     }
 
     public boolean isLeft() {
