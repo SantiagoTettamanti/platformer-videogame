@@ -14,7 +14,8 @@ public class Player extends Entity {
     private BufferedImage[][] animations;
     private int aniTick, aniIndex, aniSpeed = 15;
     private int playerAction = IDLE;
-    private boolean moving = false; attacking = false;
+    private boolean moving = false;
+    private boolean attacking = false;
     private boolean left, up, right, down;
     private float playerSpeed = 2.0f;
 
@@ -23,13 +24,13 @@ public class Player extends Entity {
         loadAnimations();
     }
 
-    public void update () {
+    public void update() {
         updatePos();
         updateAnimationTick();
         setAnimation();
     }
 
-    public void render (Graphics g) {
+    public void render(Graphics g) {
         g.drawImage(animations[playerAction][aniIndex], (int) x, (int) y, 256, 160, null);
 
     }
@@ -39,18 +40,34 @@ public class Player extends Entity {
         if (aniTick >= aniSpeed) {
             aniTick = 0;
             aniIndex++;
-            if (aniIndex >= GetSpriteAmount(playerAction))
+            if (aniIndex >= GetSpriteAmount(playerAction)) {
                 aniIndex = 0;
+                attacking = false;
+            }
         }
     }
 
     private void setAnimation() {
+        int startAni = playerAction;
+
         if (moving) {
             playerAction = RUNNING;
         } else {
             playerAction = IDLE;
         }
+        if (attacking) {
+            playerAction = ATTACK_1;
+        }
+        if (startAni != playerAction) {
+            resetAniTick();
+        }
     }
+
+    private void resetAniTick() {
+        aniTick = 0;
+        aniIndex = 0;
+    }
+
 
     private void updatePos() {
 
