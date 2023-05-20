@@ -10,9 +10,8 @@ import javax.swing.JPanel;
 
 import inputs.KeyboardInputs;
 import inputs.MouseInputs;
-
-import static utils.Constants.PlayerConstants.*;
-import static utils.Constants.Directions.*;
+import static main.Game.GAME_HEIGHT;
+import static main.Game.GAME_WIDTH;
 
 //------------------------------------------actual code begins----------------------------//
 
@@ -32,10 +31,9 @@ public class GamePanel extends JPanel {
     }
 
     private void setPanelSize() {
-        Dimension size = new Dimension(1280, 800);
-        setMinimumSize(size);
+        Dimension size = new Dimension(GAME_WIDTH, GAME_HEIGHT);
         setPreferredSize(size);
-        setMaximumSize(size);
+        System.out.println("size : "+ GAME_WIDTH + " : "+ GAME_HEIGHT);
     }
 
 
