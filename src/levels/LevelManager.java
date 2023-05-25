@@ -1,6 +1,5 @@
 package levels;
 
-import jdk.jshell.execution.LoaderDelegate;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -12,10 +11,12 @@ import utils.LoadSave;
 public class LevelManager {
     private Game game;
     private BufferedImage[] levelSprite;
+    private Level levelOne;
+
     public LevelManager(Game game) {
         this.game = game;
-        //levelSprite = LoadSave.GetSpriteAtlas(LoadSave.LEVEL_ATLAS);
         importOutsideSprites();
+        levelOne = new Level(LoadSave.GetLevelData());
     }
 
     private void importOutsideSprites() {
@@ -30,7 +31,12 @@ public class LevelManager {
     }
 
     public void draw(Graphics g) {
-        g.drawImage(levelSprite[2], 0, 0, null);
+        for(int j = 0; j < Game.TILES_IN_HEIGHT; j++){
+            for(int i = 0; i < Game.TILES_IN_WIDTH; i++){
+                int index = levelOne.getSpriteIndex(i, j);
+                g.drawImage(levelSprite[index],Game.TILES_SIZE*i , Game.TILES_SIZE*j, Game.TILES_SIZE, Game.TILES_SIZE, null);
+            }
+        }
     }
     public void update() {
 
