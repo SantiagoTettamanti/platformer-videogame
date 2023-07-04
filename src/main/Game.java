@@ -1,14 +1,13 @@
 package main;
 
+import java.awt.Graphics;
+
 import entities.Player;
-import inputs.KeyboardInputs;
 import levels.LevelManager;
 
-import java.awt.*;
+public class Game implements Runnable {
 
-public class Game implements Runnable{
-	
-	private GameWindow gameWindow;     //We're defining an object which can be used later
+	private GameWindow gameWindow;
 	private GamePanel gamePanel;
 	private Thread gameThread;
 	private final int FPS_SET = 120;
@@ -16,36 +15,39 @@ public class Game implements Runnable{
 	private Player player;
 	private LevelManager levelManager;
 
-	private final static int TILES_DEFAULT_SIZE = 32;
-	public final static float SCALE = 1.5f;
+	public final static int TILES_DEFAULT_SIZE = 32;
+	public final static float SCALE = 2f;
 	public final static int TILES_IN_WIDTH = 26;
 	public final static int TILES_IN_HEIGHT = 14;
 	public final static int TILES_SIZE = (int) (TILES_DEFAULT_SIZE * SCALE);
 	public final static int GAME_WIDTH = TILES_SIZE * TILES_IN_WIDTH;
 	public final static int GAME_HEIGHT = TILES_SIZE * TILES_IN_HEIGHT;
 
-	//Constructor//
 	public Game() {
 		initClasses();
-		gamePanel = new GamePanel(this);
-		gameWindow = new GameWindow(gamePanel);     // We're using the object we defined above
-		gamePanel.requestFocus();
-		startGameLoop();
 
+		gamePanel = new GamePanel(this);
+		gameWindow = new GameWindow(gamePanel);
+		gamePanel.requestFocus();
+
+		startGameLoop();
 	}
 
 	private void initClasses() {
-		player = new Player(200, 200, (int) (64 * SCALE), (int) (40 * SCALE));
 		levelManager = new LevelManager(this);
+		player = new Player(200, 200, (int) (64 * SCALE), (int) (40 * SCALE));
+		player.loadLvlData(levelManager.getCurrentLevel().getLevelData());
+
 	}
 
 	private void startGameLoop() {
 		gameThread = new Thread(this);
 		gameThread.start();
 	}
+
 	public void update() {
-		player.update();
 		levelManager.update();
+		player.update();
 	}
 
 	public void render(Graphics g) {
@@ -68,14 +70,14 @@ public class Game implements Runnable{
 		double deltaU = 0;
 		double deltaF = 0;
 
-		while(true){
+		while (true) {
 			long currentTime = System.nanoTime();
 
 			deltaU += (currentTime - previousTime) / timePerUpdate;
 			deltaF += (currentTime - previousTime) / timePerFrame;
 			previousTime = currentTime;
 
-			if(deltaU >= 1) {
+			if (deltaU >= 1) {
 				update();
 				updates++;
 				deltaU--;
@@ -87,21 +89,23 @@ public class Game implements Runnable{
 				deltaF--;
 			}
 
-			if (System.currentTimeMillis() - lastCheck >= 1000){
+			if (System.currentTimeMillis() - lastCheck >= 1000) {
 				lastCheck = System.currentTimeMillis();
 				System.out.println("FPS: " + frames + " | UPS: " + updates);
 				frames = 0;
 				updates = 0;
+
 			}
-
-
 		}
+
 	}
 
 	public void windowFocusLost() {
 		player.resetDirBooleans();
 	}
-	public Player getPLayer() {
+
+	public Player getPlayer() {
 		return player;
 	}
+
 }
