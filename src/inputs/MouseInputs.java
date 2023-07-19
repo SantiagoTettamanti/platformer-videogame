@@ -1,10 +1,11 @@
 package inputs;
 
-import main.GamePanel;
-
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;            //<-- These are here because I implemented the listeners
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+
+import gamestates.Gamestate;
+import main.GamePanel;
 
 public class MouseInputs implements MouseListener, MouseMotionListener {
 
@@ -15,24 +16,47 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
     }
 
     @Override
+    public void mouseDragged(MouseEvent e) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+
+    }
+
+    @Override
     public void mouseClicked(MouseEvent e) {
-        if(e.getButton() == MouseEvent.BUTTON1) {
-            gamePanel.getGame().getPLayer().setAttacking(true);
+        switch (Gamestate.state) {
+            case MENU:
+                gamePanel.getGame().getMenu().mouseClicked(e);
+                break;
+            case PLAYING:
+                gamePanel.getGame().getPlaying().mouseClicked(e);
+                break;
+            default:
+                break;
+
         }
+
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
+        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
+        // TODO Auto-generated method stub
 
     }
 
@@ -41,13 +65,4 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
 
     }
 
-    @Override
-    public void mouseDragged(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-
-    }
 }
