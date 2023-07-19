@@ -5,10 +5,7 @@ import java.awt.event.KeyListener;
 
 import main.GamePanel;
 
-
-public class KeyboardInputs implements KeyListener {    //<--When you implement you have to actually implement all
-                                                        //   methods provided in the interface (KeyListener)
-                                                        // It's versatile, could work with Xbox controller.
+public class KeyboardInputs implements KeyListener {
 
     private GamePanel gamePanel;
 
@@ -18,43 +15,47 @@ public class KeyboardInputs implements KeyListener {    //<--When you implement 
 
     @Override
     public void keyTyped(KeyEvent e) {
-
+        // TODO Auto-generated method stub
     }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_W:
-                gamePanel.getGame().getPLayer().setUp(true);
-                break;
-            case KeyEvent.VK_A:
-                gamePanel.getGame().getPLayer().setLeft(true);
-                break;
-            case KeyEvent.VK_S:
-                gamePanel.getGame().getPLayer().setDown(true);
-                break;
-            case KeyEvent.VK_D:
-                gamePanel.getGame().getPLayer().setRight(true);
-                break;
-        }
-    }
-
 
     @Override
     public void keyReleased(KeyEvent e) {
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_W:
-                gamePanel.getGame().getPLayer().setUp(false);
-                break;
+//		case KeyEvent.VK_W:
+//			gamePanel.getGame().getPlayer().setUp(false);
+//			break;
             case KeyEvent.VK_A:
-                gamePanel.getGame().getPLayer().setLeft(false);
+                gamePanel.getGame().getPlayer().setLeft(false);
                 break;
-            case KeyEvent.VK_S:
-                gamePanel.getGame().getPLayer().setDown(false);
-                break;
+//		case KeyEvent.VK_S:
+//			gamePanel.getGame().getPlayer().setDown(false);
+//			break;
             case KeyEvent.VK_D:
-                gamePanel.getGame().getPLayer().setRight(false);
+                gamePanel.getGame().getPlayer().setRight(false);
+                break;
+            case KeyEvent.VK_SPACE:
+                gamePanel.getGame().getPlayer().setJump(false);
+                break;
+        }
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        switch (e.getKeyCode()) {
+//		case KeyEvent.VK_W:
+//			gamePanel.getGame().getPlayer().setUp(true);
+//			break;
+            case KeyEvent.VK_A:
+                gamePanel.getGame().getPlayer().setLeft(true);
+                break;
+//		case KeyEvent.VK_S:
+//			gamePanel.getGame().getPlayer().setDown(true);
+//			break;
+            case KeyEvent.VK_D:
+                gamePanel.getGame().getPlayer().setRight(true);
+                break;
+            case KeyEvent.VK_SPACE:
+                gamePanel.getGame().getPlayer().setJump(true);
                 break;
         }
     }
